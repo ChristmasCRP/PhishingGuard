@@ -15,6 +15,7 @@ origins = [
     "http://localhost:5173",
     "http://localhost:3000",
 ]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -22,6 +23,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 # ---------------------------------------------------------
 # REJESTRACJA
 # ---------------------------------------------------------
@@ -40,7 +42,7 @@ async def register_user(user: schemas.UserCreate):
         )
     
     print("SUKCES: Użytkownik utworzony.")
-    return schemas.UserOut(email=new_user["email"], nickname=new_user["nickname"])
+    return schemas.UserOut(email=new_user["email"], nickname=new_user["nickname"], role=new_user.get("role", "user"))
 
 # ---------------------------------------------------------
 # LOGOWANIE
@@ -49,25 +51,19 @@ async def register_user(user: schemas.UserCreate):
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
     print(f"\n--- PRÓBA LOGOWANIA ---")
     print(f"Wpisany login (username): '{form_data.username}'")
-    print(f"Wpisane hasło: '{form_data.password}'")
 
     user = await crud.get_user_by_email(form_data.username)
     
     if not user:
-        print("BŁĄD: Nie znaleziono użytkownika o takim emailu w bazie.")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
     
-    print(f"Znaleziono usera w bazie: {user['email']}")
-    print(f"Hash hasła w bazie: {user['hashed_password']}")
-
     is_password_correct = verify_password(form_data.password, user["hashed_password"])
     
     if not is_password_correct:
-        print("BŁĄD: Hasło się nie zgadza.")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password",
@@ -102,3 +98,57 @@ async def delete_my_account(current_user: schemas.UserOut = Depends(get_current_
     if not success:
         raise HTTPException(status_code=500, detail="Failed to delete account")
     return
+
+
+# ========================================================== #
+#                        QUIZ API                            #
+# ========================================================== #
+
+# 1. ADMIN: Dodawanie pytania
+@app.post("/admin/quiz", status_code=status.HTTP_201_CREATED)
+async def add_question(
+    question: schemas.QuestionCreate,
+    admin: schemas.UserOut = Depends(auth.get_current_admin)
+):
+    q_id = await crud.create_question(question)
+    return {"message": "Question added", "id": q_id}
+
+# 2. ADMIN: Usuwanie pytania
+@app.delete("/admin/quiz/{question_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def remove_question(
+    question_id: str,
+    admin: schemas.UserOut = Depends(auth.get_current_admin)
+):
+    success = await crud.delete_question(question_id)
+    if not success:
+        raise HTTPException(status_code=404, detail="Question not found")
+    return
+
+# 3. ADMIN: Edycja pytania
+@app.put("/admin/quiz/{question_id}")
+async def edit_question(
+    question_id: str,
+    question_data: schemas.QuestionCreate,
+    admin: schemas.UserOut = Depends(auth.get_current_admin)
+):
+    success = await crud.update_question(question_id, question_data)
+    if not success:
+        raise HTTPException(status_code=404, detail="Question not found")
+    return {"message": "Question updated"}
+
+# 4. PUBLIC: Pobieranie listy pytań (bez poprawnej odpowiedzi)
+@app.get("/quiz", response_model=list[schemas.QuestionPublicOut])
+async def get_quiz_questions():
+    return await crud.get_all_questions()
+
+# 5. USER: Sprawdzanie odpowiedzi
+@app.post("/quiz/check", response_model=schemas.AnswerResult)
+async def check_my_answer(
+    answer: schemas.AnswerCheck,
+    user: schemas.UserOut = Depends(auth.get_current_user)
+):
+    result = await crud.check_answer(answer.question_id, answer.selected_index)
+    if result is None:
+        raise HTTPException(status_code=404, detail="Question not found")
+    
+    return result

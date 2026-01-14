@@ -1,7 +1,3 @@
-# SECRET_KEY, URI do MongoDB
-#user jakubuser
-#pass TKNz4mH5detPFQcC
-
 import os
 from dotenv import load_dotenv
 

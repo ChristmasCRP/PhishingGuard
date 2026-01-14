@@ -1,12 +1,10 @@
-from config import MONGO_URI, SECRET_KEY
-from schemas import UserCreate, UserOut, TokenData
 from config import SECRET_KEY
+from schemas import UserOut, TokenData
 import bcrypt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from datetime import datetime, timedelta, timezone
-import crud
 
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
@@ -54,10 +52,12 @@ def verify_token(token: str, credentials_exception):
 
 
 # ========================================================== #
-#                   ZALEŻNOŚĆ USERA                          #
+#                   ZALEŻNOŚĆ USERA I ADMINA                 #
 # ========================================================== #
 
 async def get_current_user(token: str = Depends(oauth2_scheme)):
+    import crud
+    
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -67,4 +67,15 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     user = await crud.get_user_by_email(token_data.email)
     if user is None:
         raise credentials_exception
-    return UserOut(email=user["email"], nickname=user["nickname"])
+    
+    role = user.get("role", "user")
+    
+    return UserOut(email=user["email"], nickname=user["nickname"], role=role)
+
+async def get_current_admin(current_user: UserOut = Depends(get_current_user)):
+    if current_user.role != "admin":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You do not have permission (Admin only)"
+        )
+    return current_user

@@ -18,6 +18,29 @@ class UserCreate(BaseModel):
 class UserOut(BaseModel):
     email: EmailStr
     nickname: str
+    role: str = "user"
 
 class UserPasswordUpdate(BaseModel):
     new_password: str = Field(..., min_length=6, max_length=100)
+
+# --- QUIZ ---
+
+class QuestionCreate(BaseModel):
+    content: str
+    image_url: str | None = None
+    options: list[str]
+    correct_answer_index: int
+
+class QuestionPublicOut(BaseModel):
+    id: str
+    content: str
+    image_url: str | None = None
+    options: list[str]
+
+class AnswerCheck(BaseModel):
+    question_id: str
+    selected_index: int
+
+class AnswerResult(BaseModel):
+    is_correct: bool
+    correct_index: int
