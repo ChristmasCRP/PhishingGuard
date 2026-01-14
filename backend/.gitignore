@@ -1,0 +1,18 @@
+# Wirtualne środowisko
+venv/
+__pycache__/
+*.pyc
+
+# Pliki konfiguracyjne lokalne
+config.py
+
+# Pliki bazy danych (jeśli używasz lokalnie MongoDB, np. dump)
+*.db
+*.sqlite3
+
+# Logi
+*.log
+
+# Inne niepotrzebne
+.env
+.ENV
