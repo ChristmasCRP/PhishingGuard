@@ -1,6 +1,6 @@
 # crud.py
 from database import db
-import schemas  # Importujemy moduł schemas
+import schemas
 from auth import get_password_hash
 from pymongo.errors import DuplicateKeyError
 from motor.motor_asyncio import AsyncIOMotorCollection
