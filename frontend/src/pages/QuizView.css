@@ -1,0 +1,142 @@
+.quiz-view-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  
+  /* Zwiększamy padding-top, aby "wyciągnąć" kartę spod Navbara */
+  padding: 120px 20px 40px 20px; /* góra, prawe, dół, lewe */
+  
+  min-height: calc(100vh - 70px);
+  background: #121212;
+  box-sizing: border-box; /* Ważne, aby padding nie powiększał szerokości */
+}
+
+.quiz-card-template {
+  width: 100%;
+  max-width: 750px;
+  background: #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #333;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+/* Nagłówek zgodny ze wzorem, ale w ciemnej tonacji */
+.q-header {
+  background: #2a2a2a; /* Ciemniejszy szary */
+  padding: 30px;
+  text-align: center;
+  border-bottom: 1px solid #333;
+}
+
+.q-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #fff;
+  line-height: 1.4;
+}
+
+/* Sekcja Media */
+.q-media {
+  width: 100%;
+  background: #000;
+  display: flex;
+  justify-content: center;
+}
+
+.q-media img {
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+}
+
+.q-placeholder {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* Siatka 2x2 - Klucz do Twojego wzoru */
+.q-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Dwie kolumny */
+  gap: 15px;
+  padding: 25px;
+}
+
+.q-option {
+  background: #252525;
+  border: 2px solid #333;
+  color: #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  font-weight: 500;
+  min-height: 70px;
+}
+
+.q-option:hover:not(:disabled) {
+  border-color: #646cff;
+  background: #2a2a3a;
+  color: #fff;
+}
+
+/* Kolory po sprawdzeniu */
+.q-option.is-correct {
+  background: rgba(40, 167, 69, 0.2) !important;
+  border-color: #28a745 !important;
+  color: #fff;
+}
+
+.q-option.is-wrong {
+  background: rgba(220, 53, 69, 0.2) !important;
+  border-color: #dc3545 !important;
+  color: #fff;
+}
+
+.q-option:disabled {
+  cursor: default;
+}
+
+/* Przycisk Następne */
+.q-footer {
+  padding: 0 25px 25px;
+  display: flex;
+  justify-content: center;
+}
+
+.q-next-btn {
+  background: #646cff;
+  color: white;
+  border: none;
+  padding: 14px 40px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 100%;
+}
+
+.q-next-btn:hover {
+  background: #535bf2;
+}
+
+.quiz-status {
+  text-align: center;
+  color: white;
+  margin-top: 100px;
+  font-size: 1.2rem;
+}
+
+/* Responsywność dla telefonów (jedna kolumna) */
+@media (max-width: 600px) {
+  .q-grid {
+    grid-template-columns: 1fr;
+  }
+}

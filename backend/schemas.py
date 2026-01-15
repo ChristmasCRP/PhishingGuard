@@ -38,6 +38,7 @@ class QuestionPublicOut(BaseModel):
     content: str
     image_url: str | None = None
     options: list[str]
+    correct_answer_index: int
 
 class AnswerCheck(BaseModel):
     question_id: str
