@@ -68,7 +68,8 @@ async def get_questions_by_quiz_id(quiz_id: str):
             "quiz_id": q["quiz_id"],
             "content": q["content"],
             "image_url": q.get("image_url"),
-            "options": q["options"]
+            "options": q["options"],
+            "correct_answer_index": q.get("correct_answer_index", 0)
         })
     return questions
 
