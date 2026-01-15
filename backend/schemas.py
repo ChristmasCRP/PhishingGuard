@@ -26,6 +26,7 @@ class UserPasswordUpdate(BaseModel):
 # --- QUIZ ---
 
 class QuestionCreate(BaseModel):
+    quiz_id: str
     content: str
     image_url: str | None = None
     options: list[str]
@@ -33,6 +34,7 @@ class QuestionCreate(BaseModel):
 
 class QuestionPublicOut(BaseModel):
     id: str
+    quiz_id: str
     content: str
     image_url: str | None = None
     options: list[str]

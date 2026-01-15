@@ -56,25 +56,22 @@ async def delete_user(email: str):
 #                        QUIZ CRUD                           #
 # ========================================================== #
 
-# 1. CREATE (Admin)
 async def create_question(question: schemas.QuestionCreate):
     result = await questions_collection.insert_one(question.dict())
     return str(result.inserted_id)
 
-# 2. READ ALL (Public)
-async def get_all_questions():
+async def get_questions_by_quiz_id(quiz_id: str):
     questions = []
-    async for q in questions_collection.find():
+    async for q in questions_collection.find({"quiz_id": quiz_id}):
         questions.append({
             "id": str(q["_id"]),
+            "quiz_id": q["quiz_id"],
             "content": q["content"],
             "image_url": q.get("image_url"),
-            "options": q["options"],
-            "correct_answer_index": q["correct_answer_index"]
+            "options": q["options"]
         })
     return questions
 
-# 3. CHECK ANSWER (User)
 async def check_answer(question_id: str, selected_index: int):
     try:
         q = await questions_collection.find_one({"_id": ObjectId(question_id)})
@@ -90,7 +87,6 @@ async def check_answer(question_id: str, selected_index: int):
     except Exception:
         return None
 
-# 4. DELETE (Admin)
 async def delete_question(question_id: str):
     try:
         result = await questions_collection.delete_one({"_id": ObjectId(question_id)})
@@ -98,7 +94,6 @@ async def delete_question(question_id: str):
     except Exception:
         return False
 
-# 5. UPDATE (Admin)
 async def update_question(question_id: str, question_data: schemas.QuestionCreate):
     try:
         result = await questions_collection.update_one(

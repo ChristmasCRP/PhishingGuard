@@ -104,8 +104,8 @@ async def delete_my_account(current_user: schemas.UserOut = Depends(get_current_
 #                        QUIZ API                            #
 # ========================================================== #
 
-# 1. ADMIN: Dodawanie pytania
-@app.post("/admin/quiz", status_code=status.HTTP_201_CREATED)
+# 1. ADMIN: Dodawanie pytania (z polem quiz_id w body)
+@app.post("/admin/questions", status_code=status.HTTP_201_CREATED)
 async def add_question(
     question: schemas.QuestionCreate,
     admin: schemas.UserOut = Depends(auth.get_current_admin)
@@ -113,35 +113,13 @@ async def add_question(
     q_id = await crud.create_question(question)
     return {"message": "Question added", "id": q_id}
 
-# 2. ADMIN: Usuwanie pytania
-@app.delete("/admin/quiz/{question_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def remove_question(
-    question_id: str,
-    admin: schemas.UserOut = Depends(auth.get_current_admin)
-):
-    success = await crud.delete_question(question_id)
-    if not success:
-        raise HTTPException(status_code=404, detail="Question not found")
-    return
+# 2. PUBLIC: Pobieranie pytań dla quizu
+@app.get("/quiz/{quiz_id}", response_model=list[schemas.QuestionPublicOut])
+async def get_quiz_questions(quiz_id: str):
+    questions = await crud.get_questions_by_quiz_id(quiz_id)
+    return questions
 
-# 3. ADMIN: Edycja pytania
-@app.put("/admin/quiz/{question_id}")
-async def edit_question(
-    question_id: str,
-    question_data: schemas.QuestionCreate,
-    admin: schemas.UserOut = Depends(auth.get_current_admin)
-):
-    success = await crud.update_question(question_id, question_data)
-    if not success:
-        raise HTTPException(status_code=404, detail="Question not found")
-    return {"message": "Question updated"}
-
-# 4. PUBLIC: Pobieranie listy pytań (bez poprawnej odpowiedzi)
-@app.get("/quiz", response_model=list[schemas.QuestionPublicOut])
-async def get_quiz_questions():
-    return await crud.get_all_questions()
-
-# 5. USER: Sprawdzanie odpowiedzi
+# 3. USER: Sprawdzanie odpowiedzi
 @app.post("/quiz/check", response_model=schemas.AnswerResult)
 async def check_my_answer(
     answer: schemas.AnswerCheck,
@@ -152,3 +130,26 @@ async def check_my_answer(
         raise HTTPException(status_code=404, detail="Question not found")
     
     return result
+
+# 4. ADMIN: Usuwanie pytania
+@app.delete("/admin/quiz/{question_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def remove_question(
+    question_id: str,
+    admin: schemas.UserOut = Depends(auth.get_current_admin)
+):
+    success = await crud.delete_question(question_id)
+    if not success:
+        raise HTTPException(status_code=404, detail="Question not found")
+    return
+
+# 5. ADMIN: Edycja pytania
+@app.put("/admin/quiz/{question_id}")
+async def edit_question(
+    question_id: str,
+    question_data: schemas.QuestionCreate,
+    admin: schemas.UserOut = Depends(auth.get_current_admin)
+):
+    success = await crud.update_question(question_id, question_data)
+    if not success:
+        raise HTTPException(status_code=404, detail="Question not found")
+    return {"message": "Question updated"}
