@@ -10,13 +10,13 @@
 body {
   margin: 0;
   padding: 0;
-  display: block; /* Vite często ma tutaj 'flex' lub 'place-items: center', co wszystko psuje */
+  display: block;
   min-width: 100vw;
   min-height: 100vh;
 }
 
 #root {
-  width: 100%; /* Wymuszamy, żeby React zajął całą szerokość okna */
+  width: 100%;
   margin: 0;
   padding: 0;
 }

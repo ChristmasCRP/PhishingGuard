@@ -68,5 +68,5 @@
 
 .close-x-btn:hover {
   color: #ff0000;
-  transform: scale(1.2); /* Delikatne powiększenie przy najechaniu */
+  transform: scale(1.2);
 }

@@ -3,12 +3,11 @@
   justify-content: center;
   align-items: flex-start;
   
-  /* Zwiększamy padding-top, aby "wyciągnąć" kartę spod Navbara */
-  padding: 120px 20px 40px 20px; /* góra, prawe, dół, lewe */
+  padding: 120px 20px 40px 20px;
   
   min-height: calc(100vh - 70px);
   background: #121212;
-  box-sizing: border-box; /* Ważne, aby padding nie powiększał szerokości */
+  box-sizing: border-box;
 }
 
 .quiz-card-template {
@@ -21,9 +20,8 @@
   box-shadow: 0 20px 40px rgba(0,0,0,0.4);
 }
 
-/* Nagłówek zgodny ze wzorem, ale w ciemnej tonacji */
 .q-header {
-  background: #2a2a2a; /* Ciemniejszy szary */
+  background: #2a2a2a;
   padding: 30px;
   text-align: center;
   border-bottom: 1px solid #333;
@@ -36,7 +34,6 @@
   line-height: 1.4;
 }
 
-/* Sekcja Media */
 .q-media {
   width: 100%;
   background: #000;
@@ -60,10 +57,9 @@
   text-transform: uppercase;
 }
 
-/* Siatka 2x2 - Klucz do Twojego wzoru */
 .q-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Dwie kolumny */
+  grid-template-columns: repeat(2, 1fr);
   gap: 15px;
   padding: 25px;
 }
@@ -87,7 +83,6 @@
   color: #fff;
 }
 
-/* Kolory po sprawdzeniu */
 .q-option.is-correct {
   background: rgba(40, 167, 69, 0.2) !important;
   border-color: #28a745 !important;
@@ -104,7 +99,6 @@
   cursor: default;
 }
 
-/* Przycisk Następne */
 .q-footer {
   padding: 0 25px 25px;
   display: flex;
@@ -134,7 +128,6 @@
   font-size: 1.2rem;
 }
 
-/* Responsywność dla telefonów (jedna kolumna) */
 @media (max-width: 600px) {
   .q-grid {
     grid-template-columns: 1fr;

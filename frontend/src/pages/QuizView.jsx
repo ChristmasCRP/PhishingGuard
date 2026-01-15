@@ -14,7 +14,6 @@ const QuizView = () => {
 useEffect(() => {
   const fetchQuizData = async () => {
     try {
-      // Pobieramy pytania tylko dla tego konkretnego quizu!
       const { data } = await getQuestions(quizId); 
       setQuestions(data);
     } catch (err) {
@@ -41,7 +40,7 @@ useEffect(() => {
       setCurrentIdx(prev => prev + 1);
       setSelectedResult(null);
     } else {
-      navigate('/quizzes'); // Powrót do listy po zakończeniu
+      navigate('/quizzes');
     }
   };
 
@@ -53,12 +52,10 @@ useEffect(() => {
   return (
     <div className="quiz-view-wrapper">
       <div className="quiz-card-template">
-        {/* 1. Nagłówek (Header) */}
         <div className="q-header">
           <h2>{q.content}</h2>
         </div>
 
-        {/* 2. Obrazek (Opcjonalny) */}
         <div className="q-media">
           {q.image_url ? (
             <img src={q.image_url} alt="Zasób wizualny" />
@@ -69,7 +66,6 @@ useEffect(() => {
           )}
         </div>
 
-        {/* 3. Siatka odpowiedzi (Grid 2x2) */}
         <div className="q-grid">
           {q.options.map((opt, i) => {
             let statusClass = "";
@@ -91,7 +87,6 @@ useEffect(() => {
           })}
         </div>
 
-        {/* 4. Stopka z akcją */}
         {selectedResult && (
           <div className="q-footer">
             <button className="q-next-btn" onClick={nextQuestion}>
