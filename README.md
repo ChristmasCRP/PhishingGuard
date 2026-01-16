@@ -88,8 +88,6 @@ python -m venv venv
 
 #Aktywacja środowiska (Windows)
 .\venv\Scripts\activate
-# Aktywacja środowiska (macOS/Linux)
-source venv/bin/activate
 
 #Instalacja zależności
 pip install -r requirements.txt
