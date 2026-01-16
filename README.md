@@ -54,6 +54,7 @@ Projekt został podzielony na dwie części: API (Backend) oraz Klienta (Fronten
 
 ## Struktura Projektu
 
+```
 PhishingGuard/
 ├── backend/            # Logika serwera (API)
 │   ├── main.py         # Punkt startowy aplikacji (FastAPI)
@@ -72,7 +73,7 @@ PhishingGuard/
     │   ├── App.jsx     # Główny komponent i konfiguracja Routera
     │   └── main.jsx    # Punkt wejścia aplikacji React
     └── package.json    # Konfiguracja projektu Node.js
-
+```
 
 
 ## Instalacja i Uruchomienie
