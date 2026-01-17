@@ -125,6 +125,7 @@ Edytuj dokument, dodając lub zmieniając pole: "role": "admin".
 Przeładuj aplikację frontendową – teraz masz dostęp do ścieżek /admin i edycji quizów.
 
 ## API Endpoints
+```
 Główne punkty końcowe dostępne w Backendzie (dokumentacja Swagger pod /docs):
 Auth:
 POST /register - Rejestracja użytkownika.
@@ -141,7 +142,7 @@ Admin (wymagana rola 'admin'):
 POST /admin/questions - Dodanie nowego pytania.
 PUT /admin/quiz/{id} - Edycja pytania.
 DELETE /admin/quiz/{id} - Usunięcie pytania.
-
+```
 ## Status Projektu
 Projekt ukończony (MVP).
 Główne funkcjonalności (logowanie, system quizów, panel admina) działają poprawnie.
@@ -156,6 +157,8 @@ Resetowanie hasła przez e-mail.
 
 
 ## Autorzy
+```
 Projekt zrealizowany w ramach studiów.
 Backend: [Jakub Danilkiewicz] - architektura API, baza danych, logika biznesowa.
 Frontend: [Paweł Glaza] - interfejs użytkownika, React, komunikacja z API.
+```
