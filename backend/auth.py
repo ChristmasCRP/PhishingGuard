@@ -10,10 +10,7 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
-
-# ========================================================== #
-#                   HASZOWANIE HASEŁ (BCRYPT)                #
-# ========================================================== #
+#HASZOWANIE HASEŁ (BCRYPT)
 
 def get_password_hash(password: str) -> str:
     passwor_bytes = password.encode('utf-8')
@@ -26,9 +23,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     hashed_password_bytes = hashed_password.encode('utf-8')
     return bcrypt.checkpw(plain_password_bytes, hashed_password_bytes)
 
-# ========================================================== #
-#                     TOKENY JWT (JOSE)                      #
-# ========================================================== #
+#TOKENY JWT (JOSE)
  
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
@@ -51,16 +46,14 @@ def verify_token(token: str, credentials_exception):
         raise credentials_exception
 
 
-# ========================================================== #
-#                   ZALEŻNOŚĆ USERA I ADMINA                 #
-# ========================================================== #
+#ZALEŻNOŚĆ USERA I ADMINA
 
 async def get_current_user(token: str = Depends(oauth2_scheme)):
     import crud
     
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
+        detail="nie udalo sie ZWERYFIKOWAC !",
         headers={"WWW-Authenticate": "Bearer"},
     )
     token_data = verify_token(token, credentials_exception)
@@ -76,6 +69,6 @@ async def get_current_admin(current_user: UserOut = Depends(get_current_user)):
     if current_user.role != "admin":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="You do not have permission (Admin only)"
+            detail="NIE MASZ POZWOLEŃ, TYLKO ADMIN"
         )
     return current_user
