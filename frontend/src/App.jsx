@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from './components/Navbar';
 import AuthModal from './components/AuthModal';
-import QuizPage from './pages/QuizPage';
 import QuizList from './pages/QuizList';
 import QuizView from './pages/QuizView';
 import LandingPage from './pages/LandingPage';
@@ -52,7 +51,8 @@ function App() {
 
   return (
     <Router>
-      <div className="app-wrapper">
+      <div className="w-full min-h-screen flex flex-col bg-darkBg overflow-x-hidden">
+        
         <Navbar 
           onOpenAuth={() => setIsAuthModalOpen(true)} 
           isLoggedIn={isLoggedIn}
@@ -60,10 +60,9 @@ function App() {
           onLogout={handleLogout}
         />
 
-        <main className="content">
+        <main className="w-full flex-1 flex flex-col items-center">
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/quiz" element={<QuizPage />} />
             <Route 
               path="/quizzes" 
               element={<QuizList userRole={userRole} />}

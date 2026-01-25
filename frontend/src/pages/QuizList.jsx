@@ -1,55 +1,60 @@
-import { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getQuizList } from '../api/quiz';
-import './QuizList.css';
 
 const QuizList = ({ userRole }) => {
-  const [quizzes, setQuizzes] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [quizzes, setQuizzes] = useState([
+    { id: '1', title: 'Podstawy Phishingu', description: 'Naucz się rozpoznawać podejrzane maile.', difficulty: 'Łatwy' },
+    { id: '2', title: 'Bezpieczeństwo Haseł', description: 'Jak tworzyć i zarządzać silnymi hasłami.', difficulty: 'Średni' },
+    { id: '3', title: 'Socjotechnika', description: 'Nie daj się zmanipulować hakerom.', difficulty: 'Trudny' }
+  ]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchList = async () => {
-      try {
-        setQuizzes([
-          { id: '1', title: 'Podstawy Phishingu', description: 'Naucz się rozpoznawać podejrzane maile.', difficulty: 'Łatwy' },
-          { id: '2', title: 'Bezpieczeństwo Haseł', description: 'Jak tworzyć i zarządzać silnymi hasłami.', difficulty: 'Średni' },
-          { id: '3', title: 'Socjotechnika', description: 'Nie daj się zmanipulować hakerom.', difficulty: 'Trudny' },
-        ]);
-      } catch (err) {
-        console.error("Błąd pobierania listy quizów", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchList();
-  }, []);
+  const isAdmin = userRole === 'admin';
 
-  if (loading) return <div className="loader">Wczytywanie wyzwań...</div>;
+  return (
+    <div className="max-w-[1100px] mx-auto mt-[100px] mb-10 px-5 text-center">
+      
+      <div className="mb-10">
+        <h1 className="text-4xl md:text-[2.5rem] font-bold text-primary mb-2.5">
+          Wybierz wyzwanie
+        </h1>
+        <p className="text-[#888] text-lg">
+          Przetestuj swoją czujność w różnych scenariuszach cyberzagrożeń.
+        </p>
+      </div>
 
-return (
-    <div className="quiz-list-container">
-      <div className="quiz-grid">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-5 w-full max-w-[1200px] mx-auto">
         {quizzes.map((quiz) => (
-          <div key={quiz.id} className="quiz-card">
-            <div className="card-badge">{quiz.difficulty}</div>
-            <h3>{quiz.title}</h3>
-            <p>{quiz.description}</p>
+          <div 
+            key={quiz.id}
+            className="group relative bg-cardBg rounded-2xl p-6 border border-borderGray flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover hover:border-primary animate-fadeIn"
+          >
+            <div className="absolute top-4 right-4 bg-lightCard px-2.5 py-1 rounded-md text-[0.75rem] text-primary border border-primary font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+              {quiz.difficulty.toUpperCase()}
+            </div>
+
+            <h3 className="mt-4 mb-2.5 text-xl font-bold text-white text-left">
+              {quiz.title}
+            </h3>
             
-            <div className="card-actions">
+            <p className="text-[#aaa] text-sm leading-relaxed mb-6 text-left flex-grow">
+              {quiz.description}
+            </p>
+
+            <div className="flex flex-col gap-3 mt-auto">
               <button 
-                className="start-quiz-btn" 
                 onClick={() => navigate(`/quiz/${quiz.id}`)}
+                className="w-full bg-primary hover:bg-secondary text-white p-3 rounded-lg font-bold cursor-pointer transition-all duration-300 active:scale-95 shadow-lg"
               >
-                Rozpocznij Quiz
+                Rozpocznij quiz
               </button>
 
-              {userRole === 'admin' && (
+              {isAdmin && (
                 <button 
-                  className="edit-quiz-btn" 
                   onClick={() => navigate(`/admin/edit/${quiz.id}`)}
+                  className="w-full bg-transparent text-adminGold border border-adminGold p-2.5 rounded-lg font-bold cursor-pointer transition-all hover:bg-adminGold/10 active:scale-95"
                 >
-                  ⚙️ Edytuj Pytania
+                  Edytuj pytania
                 </button>
               )}
             </div>
