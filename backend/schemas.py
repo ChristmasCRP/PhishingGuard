@@ -9,7 +9,7 @@ class Token(BaseModel):
 class TokenData(BaseModel):
     email: str | None = None
 
-# --- USER ---
+# --- USER --
 class UserCreate(BaseModel):
     nickname: str = Field(..., min_length=2, max_length=30)
     email: EmailStr

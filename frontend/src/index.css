@@ -17,7 +17,6 @@
   }
 }
 
-/* Custom utility for text gradient used in hero titles */
 @layer utilities {
   .text-gradient {
     @apply bg-gradient-to-r from-white to-primary bg-clip-text text-transparent;
