@@ -23,14 +23,13 @@ Projekt został podzielony na dwie części: API (Backend) oraz Klienta (Fronten
 *   **FastAPI** - nowoczesny, wysokowydajny framework do budowania API.
 *   **MongoDB (Motor)** - asynchroniczna baza danych NoSQL.
 *   **Authentication** - JWT (JSON Web Tokens) & BCrypt (haszowanie haseł).
-*   **Pydantic** - walidacja danych i serializacja.
 
 **Frontend:**
 *   **React 18** - biblioteka interfejsu użytkownika.
 *   **Vite** - narzędzie do budowania i serwowania aplikacji (HMR).
 *   **Axios** - klient HTTP do komunikacji z API.
 *   **React Router DOM** - obsługa routingu (SPA).
-*   **CSS3** - stylowanie komponentów (responsywny design).
+*   **Tailwinds** - stylowanie komponentów (responsywny design).
 
 ## Funkcjonalności
 
