@@ -78,32 +78,32 @@ PhishingGuard/
 ## Instalacja i Uruchomienie
 
 Aby uruchomić projekt, potrzebny jest zainsatlowany Node.js, Pythona oraz dostępu do bazy MongoDB (lokalnie lub Atlas).
-1. Backend (Serwer)
+### 1. Backend (Serwer)
 Otwórz terminal w folderze projektu:
 
 cd backend
 
-#Tworzenie środowiska wirtualnego
+### Tworzenie środowiska wirtualnego
 python -m venv venv
 
-#Aktywacja środowiska (Windows)
+### Aktywacja środowiska (Windows)
 .\venv\Scripts\activate
 
-#Instalacja zależności
+### Instalacja zależności
 pip install -r requirements.txt
 
-#Uruchomienie serwera (nasłuchuje na porcie 8000)
+### Uruchomienie serwera (nasłuchuje na porcie 8000)
 uvicorn main:app --reload
 
-2. Frontend (Klient)
+### 2. Frontend (Klient)
 Otwórz drugi terminal w folderze projektu:
 
 cd frontend
 
-#Instalacja bibliotek
+### Instalacja bibliotek
 npm install
 
-#Uruchomienie serwera developerskiego (nasłuchuje na porcie 5173)
+### Uruchomienie serwera developerskiego (nasłuchuje na porcie 5173)
 npm run dev
 
 Aplikacja będzie dostępna w przeglądarce pod adresem: http://localhost:5173
