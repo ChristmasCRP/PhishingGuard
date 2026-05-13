@@ -11,6 +11,7 @@ PhishingGuard to aplikacja webowa typu Fullstack stworzona w ramach projektu stu
 * [Instalacja i Uruchomienie](#instalacja-i-uruchomienie)
 * [Konfiguracja](#konfiguracja)
 * [API Endpoints](#api-endpoints)
+* [Testy E2E (Playwright)](#testy-e2e-playwright)
 * [Status Projektu](#status-projektu)
 * [Autorzy](#autorzy)
 
@@ -55,23 +56,24 @@ Projekt został podzielony na dwie części: API (Backend) oraz Klienta (Fronten
 
 ```
 PhishingGuard/
-├── backend/            # Logika serwera (API)
-│   ├── main.py         # Punkt startowy aplikacji (FastAPI)
-│   ├── crud.py         # Operacje na bazie danych (MongoDB)
-│   ├── auth.py         # Logika logowania, haszowania i tokenów JWT
-│   ├── schemas.py      # Modele danych Pydantic (User, Question, Quiz)
-│   ├── database.py     # Konfiguracja połączenia z MongoDB
-│   ├── config.py       # Obsługa zmiennych środowiskowych
-│   └── requirements.txt # Lista zależności Python
-└── frontend/           # Aplikacja kliencka (React + Vite)
-    ├── public/         # Zasoby statyczne
-    ├── src/
-    │   ├── api/        # Funkcje łączące z backendem (Axios)
-    │   ├── components/ # Reużywalne elementy (Navbar, AuthModal, Dashboard)
-    │   ├── pages/      # Główne widoki (LandingPage, QuizPage, QuizList)
-    │   ├── App.jsx     # Główny komponent i konfiguracja Routera
-    │   └── main.jsx    # Punkt wejścia aplikacji React
-    └── package.json    # Konfiguracja projektu Node.js
+├── backend/                # Logika serwera (API)
+│   ├── main.py             # Punkt startowy aplikacji (FastAPI)
+│   ├── crud.py             # Operacje na bazie danych (MongoDB)
+│   ├── auth.py             # Logika logowania i tokenów JWT
+│   ├── schemas.py          # Modele danych Pydantic
+│   ├── database.py         # Konfiguracja połączenia z MongoDB
+│   └── requirements.txt    # Lista zależności Python
+├── frontend/               # Aplikacja kliencka (React + Vite)
+│   ├── src/
+│   │   ├── api/            # Komunikacja z API (Axios)
+│   │   ├── components/     # Reużywalne komponenty (Navbar, Modale)
+│   │   └── pages/          # Widoki stron (Dashboard, Quiz)
+│   └── package.json        # Zależności Node.js
+└── projekt-playwright-e2e/ # Automatyczne testy end-to-end
+    ├── e2e/
+    │   └── testy.spec.ts   # Scenariusze testowe
+    ├── playwright.config.ts # Konfiguracja frameworka Playwright
+    └── package.json        # Zależności narzędzi testowych
 ```
 
 
@@ -142,6 +144,27 @@ POST /admin/questions - Dodanie nowego pytania.
 PUT /admin/quiz/{id} - Edycja pytania.
 DELETE /admin/quiz/{id} - Usunięcie pytania.
 ```
+
+## Testy E2E (Playwright)
+W projekcie zaimplementowano automatyczne testy end-to-end zapewniające stabilność krytycznych funkcji.
+    Opis scenariuszy:
+        1. Logowanie Administratora: Sprawdzenie autoryzacji oraz dynamicznej zmiany elementów interfejsu (widoczność przycisku wylogowania).
+
+        2. Dodawanie pytania (CRUD): Weryfikacja formularza dodawania pytania w panelu admina wraz z obsługą systemowych okien dialogowych (alertów).
+
+        3. Rejestracja: Test tworzenia unikalnego konta użytkownika i automatycznego logowania po rejestracji.
+
+        4. Rozwiązywanie Quizu: Weryfikacja ścieżki użytkownika od wyboru kategorii do otrzymania końcowego wyniku (np. 3/3).
+
+        5. Wylogowanie: Sprawdzenie niszczenia sesji i powrotu do publicznego stanu aplikacji.
+
+        6. Walidacja Logowania: Test negatywny sprawdzający reakcję systemu na błędne hasło (komunikat "Incorrect email or password").
+
+Uruchamianie testów:
+Bash
+cd projekt-playwright-e2e
+npx playwright test --ui
+
 ## Status Projektu
 Projekt ukończony (MVP).
 Główne funkcjonalności (logowanie, system quizów, panel admina) działają poprawnie.
@@ -159,5 +182,6 @@ Resetowanie hasła przez e-mail.
 ```
 Projekt zrealizowany w ramach studiów.
 Backend: [Jakub Danilkiewicz] - architektura API, baza danych, logika biznesowa.
+Testy: [Jakub Danilkiewicz] - Playwright
 Frontend: [Paweł Glaza] - interfejs użytkownika, React, komunikacja z API.
 ```
