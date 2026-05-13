@@ -162,9 +162,9 @@ W projekcie zaimplementowano automatyczne testy end-to-end zapewniające stabiln
         6. Walidacja Logowania: Test negatywny sprawdzający reakcję systemu na błędne hasło (komunikat "Incorrect email or password").
 
 Uruchamianie testów:
-Bash
-cd projekt-playwright-e2e
-npx playwright test --ui
+
+         1. cd projekt-playwright-e2e
+         2. npx playwright test --ui
 
 ## Status Projektu
 Projekt ukończony (MVP).
