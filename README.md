@@ -148,7 +148,8 @@ DELETE /admin/quiz/{id} - Usunięcie pytania.
 ## Testy E2E (Playwright)
 W projekcie zaimplementowano automatyczne testy end-to-end zapewniające stabilność krytycznych funkcji.
     Opis scenariuszy:
-        1. Logowanie Administratora: Sprawdzenie autoryzacji oraz dynamicznej zmiany elementów interfejsu (widoczność przycisku wylogowania).
+         
+         1. Logowanie Administratora: Sprawdzenie autoryzacji oraz dynamicznej zmiany elementów interfejsu (widoczność przycisku wylogowania).
 
         2. Dodawanie pytania (CRUD): Weryfikacja formularza dodawania pytania w panelu admina wraz z obsługą systemowych okien dialogowych (alertów).
 
