@@ -154,9 +154,9 @@ W projekcie zaimplementowano automatyczne testy end-to-end zapewniające stabiln
 
         3. Rejestracja: Test tworzenia unikalnego konta użytkownika i automatycznego logowania po rejestracji.
 
-        4. Rozwiązywanie Quizu: Weryfikacja ścieżki użytkownika od wyboru kategorii do otrzymania końcowego wyniku (np. 3/3).
+        4. Rozwiązywanie Quizu: Weryfikacja ścieżki użytkownika od wyboru kategorii do otrzymania końcowego wyniku.
 
-        5. Wylogowanie: Sprawdzenie niszczenia sesji i powrotu do publicznego stanu aplikacji.
+        5. Wylogowanie: Sprawdzenie wylogowywania się i powrotu do ekranu startowego.
 
         6. Walidacja Logowania: Test negatywny sprawdzający reakcję systemu na błędne hasło (komunikat "Incorrect email or password").
 
